@@ -54,14 +54,13 @@
                 '',
                 'php'
             );
-            $sql = sprintf(
+
+            $sql = $db->prepare(
                 "INSERT INTO users (name, gender, color) VALUES (
-                    '%s', '%s', '%s')",
-                $db->real_escape_string($name),
-                $db->real_escape_string($gender),
-                $db->real_escape_string($color)
-            );
-            $db->query($sql);
+                    ?, ?, ?)");
+            $sql->bind_param('sss', $name, $gender, $color);
+            $sql->execute();
+
             echo '<p>User added.</p>';
             $db->close();
         }
