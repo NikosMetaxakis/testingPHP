@@ -13,20 +13,22 @@
         if(!isset($_POST['name']) || $_POST['name'] === '') {
             $ok = false;
         }else{
-            $name = $_POST['name'];
+            $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
         }
         if(!isset($_POST['password']) || $_POST['password'] === '') {
             $ok = false;
         }else{
-            $password = $_POST['password'];
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
         }
         if(!isset($_POST['gender']) || $_POST['gender'] === '') {
             $ok = false;
         }else{
-            $gender = $_POST['gender'];
+            $gender = htmlspecialchars($_POST['gender'], ENT_QUOTES);
         }
         if(!isset($_POST['color']) || $_POST['color'] === '') {
-            $color = $_POST['color'];
+            $ok = false;
+        }else{
+            $color = htmlspecialchars($_POST['color'], ENT_QUOTES);
         }
         if(!isset($_POST['languages']) || !is_array($_POST['languages']) || count($_POST['languages']) === 0) {
             $ok = false;
@@ -36,12 +38,12 @@
         if(!isset($_POST['comments']) || $_POST['comments'] === '') {
             $ok = false;
         }else{
-            $comments = $_POST['comments'];
+            $comments = $color = htmlspecialchars($_POST['comments'], ENT_QUOTES);
         }
         if(!isset($_POST['tc']) || $_POST['tc'] === '') {
             $ok = false;
         }else{
-            $tc = $_POST['tc'];
+            $tc = htmlspecialchars($_POST['tc'], ENT_QUOTES);
         }
         
         if($ok) {
@@ -52,13 +54,13 @@
             <br>Language(s): %s
             <br>Comments: %s
             <br>T&amp;C: %s",
-            htmlspecialchars($name, ENT_QUOTES),
-            htmlspecialchars($password, ENT_QUOTES),
-            htmlspecialchars($gender, ENT_QUOTES),
-            htmlspecialchars($color, ENT_QUOTES),
+            $name,
+            $password,
+            $gender,
+            $color,
             htmlspecialchars(implode(' ', $languages),  ENT_QUOTES),
-            htmlspecialchars($comments, ENT_QUOTES),
-            htmlspecialchars($tc, ENT_QUOTES)
+            $comments,
+            $tc
             );
         }
     }
