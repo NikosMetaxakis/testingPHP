@@ -2,7 +2,7 @@
     require 'config.inc.php';
 
     $name = '';
-    //$password = '';
+    $password = '';
     $gender = '';
     $color = '';
     //$languages = [];
@@ -17,11 +17,11 @@
         }else{
             $name = $_POST['name'];
         }
-        /* if(!isset($_POST['password']) || $_POST['password'] === '') {
+        if(!isset($_POST['password']) || $_POST['password'] === '') {
             $ok = false;
         }else{
             $password = $_POST['password'];
-        } */
+        }
         if(!isset($_POST['gender']) || $_POST['gender'] === '') {
             $ok = false;
         }else{
@@ -49,6 +49,9 @@
         } */
         
         if($ok) {
+
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
             //add database code here
             $db = new mysqli(
                 MYSQL_HOST,
@@ -58,9 +61,9 @@
             );
 
             $sql = $db->prepare(
-                "INSERT INTO users (name, gender, color) VALUES (
-                    ?, ?, ?)");
-            $sql->bind_param('sss', $name, $gender, $color);
+                "INSERT INTO users (name, gender, color, hash) VALUES (
+                    ?, ?, ?, ?)");
+            $sql->bind_param('ssss', $name, $gender, $color, $hash);
             $sql->execute();
 
             echo '<p>User added.</p>';
@@ -78,6 +81,7 @@
     User name: <input type="text" name="name" value="<?php
       echo htmlspecialchars($name, ENT_QUOTES);  
     ?>"><br>
+    Password: <input type="password" name="password"><br>
     Gender:
         <input type="radio" name="gender" value="f" <?php
             if($gender === 'f'){
