@@ -1,4 +1,6 @@
 <?php
+    require 'config.inc.php';
+
     $name = '';
     //$password = '';
     $gender = '';
@@ -49,10 +51,10 @@
         if($ok) {
             //add database code here
             $db = new mysqli(
-                'localhost',
-                'root',
-                '',
-                'php'
+                MYSQL_HOST,
+                MYSQL_USER,
+                MYSQL_PASSWORD,
+                MYSQL_DB
             );
 
             $sql = $db->prepare(
